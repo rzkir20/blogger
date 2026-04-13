@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARCHIVE | Brutalist Editorial Blog</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
 </head>
 <body class="transition-colors duration-300">
-    <div id="root" class="min-h-screen border-8 border-black">
+    <div id="root" class="min-h-screen">
         @include('components.header')
 
         <main>
