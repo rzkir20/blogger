@@ -16,7 +16,7 @@
             <ul class="space-y-4 font-black text-2xl uppercase tracking-tighter">
                 <li><a href="{{ url('/') }}" id="f-home" class="hover:text-red-600 transition-colors">Index</a></li>
                 <li><a href="#" id="f-authors" class="hover:text-red-600 transition-colors">Contributors</a></li>
-                <li><a href="#" id="f-manifesto" class="hover:text-red-600 transition-colors">Manifesto</a></li>
+                <li><a href="{{ url('/changelog') }}" id="f-changelog" class="hover:text-red-600 transition-colors">Changelog</a></li>
                 <li><a href="#" id="f-legal" class="hover:text-red-600 transition-colors">Protocols</a></li>
             </ul>
         </div>

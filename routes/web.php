@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -20,8 +21,11 @@ Route::get('/search', function () {
     return view('search');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::view('/changelog', 'changelog');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
 
 Route::get('/register', function () {
@@ -29,6 +33,26 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:super_admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard.index');
+        })->name('dashboard');
+    });
+
+    Route::middleware('role:writer')->group(function () {
+        Route::get('/writer', function () {
+            return view('writer.index');
+        })->name('writer.home');
+    });
+
+    Route::middleware('role:reader')->group(function () {
+        Route::get('/reader', function () {
+            return view('reader.index');
+        })->name('reader.home');
+    });
+});
 
 Route::get('/articles/{slug}', function (string $slug) {
     $pageTitle = Str::headline(str_replace('-', ' ', $slug));
@@ -41,6 +65,6 @@ Route::get('/articles/{slug}', function (string $slug) {
         'pageTitle' => $pageTitle,
         'headlineLine1' => $headlineLine1,
         'headlineLine2' => $headlineLine2,
-        'articleRef' => 'ART_' . str_pad((string) (abs(crc32($slug)) % 900 + 100), 3, '0', STR_PAD_LEFT),
+        'articleRef' => 'ART_'.str_pad((string) (abs(crc32($slug)) % 900 + 100), 3, '0', STR_PAD_LEFT),
     ]);
 })->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*');

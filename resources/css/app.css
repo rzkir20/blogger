@@ -120,6 +120,10 @@ body {
     border-color: #ffffff;
 }
 
+#root.dark-mode {
+    border-color: #ffffff;
+}
+
 .dark-mode input,
 .dark-mode textarea {
     border-color: #ffffff !important;
@@ -218,6 +222,22 @@ textarea:focus {
 
 .author-card-hover:hover img {
     filter: grayscale(0) !important;
+}
+
+/* Changelog / protocols: oversized index numbers */
+.protocol-number {
+    position: absolute;
+    left: -1rem;
+    font-size: 5rem;
+    line-height: 1;
+    opacity: 0.1;
+    font-family: 'Archivo Black', sans-serif;
+    pointer-events: none;
+}
+
+.dark-mode .protocol-number {
+    opacity: 0.2;
+    color: #ff0000;
 }
 
 /* Article detail: drop cap */

@@ -110,8 +110,8 @@
                             </div>
 
                             <div class="space-y-2">
-                                <label class="font-mono text-[10px] uppercase font-bold" for="manifesto-bio">Manifesto_Bio</label>
-                                <x-ui.textarea id="manifesto-bio" name="bio" rows="3" placeholder="EXPLAIN YOUR VISUAL PHILOSOPHY...">{{ old('bio') }}</x-ui.textarea>
+                                <label class="font-mono text-[10px] uppercase font-bold" for="changelog-bio">Changelog_Bio</label>
+                                <x-ui.textarea id="changelog-bio" name="bio" rows="3" placeholder="EXPLAIN YOUR VISUAL PHILOSOPHY...">{{ old('bio') }}</x-ui.textarea>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

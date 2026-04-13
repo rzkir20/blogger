@@ -43,10 +43,22 @@
                         <p class="font-mono text-xs uppercase opacity-60">Enter your data to established connection.</p>
                     </div>
 
-                    <form class="space-y-8">
+                    <form class="space-y-8" method="post" action="{{ route('login.store') }}" id="login-form">
+                        @csrf
+
+                        @if ($errors->any())
+                            <div class="p-4 brutalist-border bg-red-50 dark:bg-red-950 text-red-900 dark:text-red-100 font-mono text-xs uppercase" role="alert">
+                                <ul class="list-disc pl-4 space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="space-y-2">
                             <label for="email" class="font-mono text-[10px] uppercase font-bold block">Email_Address</label>
-                            <x-ui.input type="email" id="email" placeholder="NODE_USER@PROTOCOL.COM" class="p-4 uppercase" />
+                            <x-ui.input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="NODE_USER@PROTOCOL.COM" class="p-4 uppercase" required autocomplete="username" />
                         </div>
 
                         <div class="space-y-2">
@@ -54,11 +66,11 @@
                                 <label for="password" class="font-mono text-[10px] uppercase font-bold">Access_Code</label>
                                 <a href="#" id="link-forgot" class="font-mono text-[10px] uppercase accent-red hover:underline">Lost_Access?</a>
                             </div>
-                            <x-ui.input type="password" id="password" placeholder="••••••••" class="p-4" />
+                            <x-ui.input type="password" name="password" id="password" placeholder="••••••••" class="p-4" required autocomplete="current-password" />
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <input type="checkbox" id="remember" class="w-4 h-4 brutalist-border bg-transparent checked:bg-red-600 appearance-none">
+                            <input type="checkbox" name="remember" id="remember" value="1" class="w-4 h-4 brutalist-border bg-transparent checked:bg-red-600 appearance-none" @checked(old('remember'))>
                             <label for="remember" class="font-mono text-[10px] uppercase cursor-pointer">Persistent_Connection</label>
                         </div>
 
@@ -100,21 +112,14 @@
                 });
             }
 
-            const form = document.querySelector('form');
+            const form = document.getElementById('login-form');
             if (!form) return;
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const submitButton = event.target.querySelector('button[type="submit"]');
+            form.addEventListener('submit', function () {
+                const submitButton = form.querySelector('button[type="submit"]');
                 if (!submitButton) return;
-
-                submitButton.innerText = 'CONNECTING...';
-                submitButton.classList.add('bg-red-600');
-                setTimeout(function () {
-                    submitButton.innerText = 'ACCESS_GRANTED';
-                    submitButton.classList.remove('bg-red-600');
-                    submitButton.classList.add('bg-green-600');
-                }, 1500);
+                submitButton.disabled = true;
+                submitButton.textContent = 'CONNECTING...';
             });
         })();
     </script>

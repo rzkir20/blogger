@@ -7,10 +7,13 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
+    use RedirectsAfterAuthentication;
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -18,7 +21,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'bio' => ['nullable', 'string', 'max:10000'],
-            'role' => ['required', 'in:reader,writer'],
+            'role' => ['required', Rule::in([User::ROLE_READER, User::ROLE_WRITER])],
         ]);
 
         $user = User::create([
@@ -29,8 +32,11 @@ class RegisterController extends Controller
             'role' => $validated['role'],
         ]);
 
-        Auth::login($user);
+        Auth::login($user, remember: true);
 
-        return redirect('/')->with('status', 'Registration complete. Welcome to the archive.');
+        return $this->redirectAfterRegistration(
+            $user,
+            'Registration complete. Welcome to the archive.',
+        );
     }
 }

@@ -5,7 +5,7 @@
 @php
     $isExplore = request()->is('explore');
     $isAuthors = request()->is('authors');
-    $isManifesto = request()->is('manifesto');
+    $isChangelog = request()->is('changelog');
 @endphp
 
 <header class="brutalist-border-b bg-white sticky top-0 z-50">
@@ -23,10 +23,10 @@
                 'bg-black text-white' => $isAuthors,
                 'hover-red' => ! $isAuthors,
             ])>Authors</a>
-            <a href="{{ url('/manifesto') }}" id="nav-archive" @class([
+            <a href="{{ url('/changelog') }}" id="nav-archive" @class([
                 'h-full px-8 flex items-center font-bold uppercase text-sm border-l-2 border-black',
-                'bg-black text-white' => $isManifesto,
-                'hover-red' => ! $isManifesto,
+                'bg-black text-white' => $isChangelog,
+                'hover-red' => ! $isChangelog,
             ])>The Files</a>
         </nav>
 
