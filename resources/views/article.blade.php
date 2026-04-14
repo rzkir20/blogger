@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+@php
+    $articleDate = $post->created_at?->format('m.d.Y') ?? now()->format('m.d.Y');
+    $wordCount = str_word_count(strip_tags((string) $post->content));
+    $readTime = max(1, (int) ceil($wordCount / 200));
+@endphp
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +18,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=archivo@400,600,800&f[]=archivo-black@400&f[]=jet-brains-mono@400&display=swap" rel="stylesheet">
 </head>
 <body class="transition-colors duration-300">
-    <div id="root" class="min-h-screen border-8 border-black">
+    <div id="root" class="min-h-screen">
         @include('components.header')
 
         <main>
@@ -24,9 +29,9 @@
                         <span>/</span>
                         <span>Issue 004</span>
                         <span>/</span>
-                        <span class="accent-red font-bold">Design Theory</span>
+                        <span class="accent-red font-bold">{{ $post->category }}</span>
                         <span>/</span>
-                        <span>03.24.2024</span>
+                        <span>{{ $articleDate }}</span>
                         <span class="opacity-60">/</span>
                         <span class="font-mono text-[10px] normal-case opacity-70">{{ $slug }}</span>
                     </div>
@@ -37,37 +42,21 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end mb-16">
                         <p class="text-2xl font-bold uppercase leading-none tracking-tight">
-                            The end of digital <br> perfection and the <br> rise of visual <br> honesty.
+                            {{ $post->description }}
                         </p>
                         <div class="font-mono text-[10px] uppercase space-y-2">
-                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Author</span><span class="font-bold">Julian Casablancas</span></div>
-                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Words</span><span class="font-bold">2,450</span></div>
-                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Read Time</span><span class="font-bold">12 Min</span></div>
+                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Author</span><span class="font-bold">{{ $post->author }}</span></div>
+                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Words</span><span class="font-bold">{{ number_format($wordCount) }}</span></div>
+                            <div class="flex justify-between border-b border-black dark:border-white pb-1"><span>Read Time</span><span class="font-bold">{{ $readTime }} Min</span></div>
                         </div>
                     </div>
 
                     <div class="brutalist-border-4 mb-16 grayscale group overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=1440" class="w-full h-auto transition-transform duration-700 group-hover:scale-105" alt="Article Cover Image">
+                        <img src="{{ $post->thumbnail ? asset('storage/'.$post->thumbnail) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=1440' }}" class="w-full h-auto transition-transform duration-700 group-hover:scale-105" alt="{{ $post->title }}">
                     </div>
 
-                    <div class="max-w-3xl mx-auto space-y-8 text-xl leading-relaxed">
-                        <p class="drop-cap font-semibold">
-                            For decades, we have chased the ghost of perfect pixels. The digital revolution promised us a world without grain, without noise, and without error. We built interfaces that were so clean they felt sterile, and algorithms so precise they felt inhuman. But in our quest for the absolute, we lost the very thing that makes communication meaningful: the friction.
-                        </p>
-                        <p>
-                            Brutalism isn't just an architectural choice; it's a rebellion. It is the visible admission of structure. It's the refusal to hide behind gradients and soft shadows. When we look at the raw grid of an editorial page, we aren't just seeing a layout; we are seeing the skeleton of the thought itself.
-                        </p>
-                        <div class="p-8 brutalist-border my-12 bg-black text-white">
-                            <h3 class="font-black text-3xl uppercase mb-4 tracking-tighter">"PERFECTION IS A FORM OF CENSORSHIP."</h3>
-                            <p class="font-mono text-sm uppercase">— Protocol 001: The ARCHIVE Manifesto</p>
-                        </div>
-                        <p>
-                            We are seeing a return to the tactile. The rise of analog fetishism—film cameras, vinyl records, risograph prints—isn't just nostalgia. It's a survival mechanism. In an era where AI can generate a 'perfect' image in seconds, the only thing that retains value is the mistake. The misalignment. The raw, unpolished truth of human effort.
-                        </p>
-                        <h2 class="font-black text-4xl uppercase tracking-tighter mt-16 mb-8">I. THE GRID AS CAGE</h2>
-                        <p>
-                            Every design system today is a variation of the same cage. We align to 8pt grids because it makes the math easy, not because it makes the message better. We have prioritized 'user experience' over 'human experience'. The difference is subtle but vital. One aims to minimize friction to maximize consumption; the other aims to create a moment of genuine encounter.
-                        </p>
+                    <div class="max-w-3xl mx-auto space-y-8 text-xl leading-relaxed prose dark:prose-invert">
+                        {!! $post->content !!}
                     </div>
                 </div>
 
@@ -78,12 +67,42 @@
                         </div>
                         <div class="p-8 brutalist-border-b space-y-8">
                             <div>
+                                <h4 class="font-black text-xl uppercase mb-4 tracking-tighter">Engagement</h4>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="border border-black dark:border-white p-3">
+                                        <p class="font-mono text-[10px] uppercase opacity-60">Views</p>
+                                        <p class="font-black text-xl uppercase">{{ number_format($viewCount) }}</p>
+                                    </div>
+                                    <div class="border border-black dark:border-white p-3">
+                                        <p class="font-mono text-[10px] uppercase opacity-60">Likes</p>
+                                        <p class="font-black text-xl uppercase">{{ number_format($likeCount) }}</p>
+                                    </div>
+                                    <div class="border border-black dark:border-white p-3 col-span-2">
+                                        <p class="font-mono text-[10px] uppercase opacity-60">Comments</p>
+                                        <p class="font-black text-xl uppercase">{{ number_format($commentCount) }}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    @auth
+                                        <form method="post" action="{{ route('articles.like', $slug) }}">
+                                            @csrf
+                                            <button type="submit" class="w-full p-3 text-center font-mono text-[10px] uppercase border-2 border-black dark:border-white {{ $isLikedByUser ? 'bg-black text-white dark:bg-white dark:text-black' : 'hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black' }}">
+                                                {{ $isLikedByUser ? 'Unlike' : 'Like' }}
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login') }}" class="block w-full p-3 text-center font-mono text-[10px] uppercase border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">Login to Like</a>
+                                    @endauth
+                                </div>
+                            </div>
+                            <div>
                                 <h4 class="font-black text-xl uppercase mb-4 tracking-tighter">Keywords</h4>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#Brutalism</span>
-                                    <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#Design_Ethics</span>
-                                    <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#Grid_Systems</span>
-                                    <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#Typography</span>
+                                    @forelse ($post->tags ?? [] as $tag)
+                                        <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#{{ $tag }}</span>
+                                    @empty
+                                        <span class="border border-black dark:border-white px-3 py-1 text-[10px] font-mono uppercase">#No_Tags</span>
+                                    @endforelse
                                 </div>
                             </div>
                             <div>
@@ -96,10 +115,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-8 brutalist-border-b bg-red-600 text-white">
-                            <h4 class="font-black text-2xl uppercase mb-4 tracking-tighter leading-none">Support The Archive Collective</h4>
-                            <p class="text-xs font-mono uppercase mb-6">Our journalism is funded by readers. Help us keep the transmissions raw.</p>
-                            <a href="#" class="block w-full py-4 text-center bg-white text-black font-black uppercase text-sm hover:bg-black hover:text-white transition-colors">Contribute $10</a>
+                        <div class="p-8 brutalist-border-b bg-red-600 text-white space-y-6">
+                            <h4 class="font-black text-2xl uppercase tracking-tighter leading-none">Support This Author</h4>
+                            <div class="flex items-center gap-4">
+                                <img src="{{ $authorProfile['avatar'] }}" alt="{{ $authorProfile['name'] }}" class="w-16 h-16 object-cover border-2 border-white">
+                                <div>
+                                    <p class="font-black text-lg uppercase leading-none">{{ $authorProfile['name'] }}</p>
+                                    <p class="font-mono text-[10px] uppercase mt-2">Followers: {{ number_format($authorProfile['followers']) }}</p>
+                                </div>
+                            </div>
+                            <p class="text-xs font-mono uppercase">Back this writer and keep independent transmissions alive.</p>
+                            @auth
+                                <form method="post" action="{{ route('articles.follow', $slug) }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full py-4 text-center font-black uppercase text-sm transition-colors {{ $isFollowingAuthor ? 'bg-black text-white cursor-default' : 'bg-white text-black hover:bg-black hover:text-white' }}" @disabled($isFollowingAuthor)>
+                                        {{ $isFollowingAuthor ? 'Following' : 'Follow' }}
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="block w-full py-4 text-center bg-white text-black font-black uppercase text-sm hover:bg-black hover:text-white transition-colors">Login to Follow</a>
+                            @endauth
                         </div>
                         <div class="p-8">
                             <h4 class="font-black text-xl uppercase mb-6 tracking-tighter">Next_Transmission</h4>
@@ -115,33 +150,74 @@
                 </aside>
             </section>
 
+            <section class="p-8 lg:p-16 brutalist-border-b space-y-8">
+                <h2 class="font-black text-4xl lg:text-6xl uppercase tracking-tighter">Comments</h2>
+
+                @auth
+                    <form method="post" action="{{ route('articles.comments.store', $slug) }}" class="space-y-4 brutalist-border p-6">
+                        @csrf
+                        <x-ui.label for="article-comment" text="Write Your Comment" />
+                        <x-ui.textarea id="article-comment" name="comment" rows="4" class="w-full brutalist-input dark:bg-transparent">{{ old('comment') }}</x-ui.textarea>
+                        @error('comment')
+                            <p class="font-mono text-[10px] uppercase text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                        <x-ui.button type="submit" class="brutalist-btn-black">Post Comment</x-ui.button>
+                    </form>
+                @else
+                    <div class="brutalist-border p-6">
+                        <p class="font-mono text-xs uppercase opacity-70">Login untuk menambahkan komentar.</p>
+                        <a href="{{ route('login') }}" class="inline-block mt-4 brutalist-btn-black">Login</a>
+                    </div>
+                @endauth
+
+                <div class="space-y-4">
+                    @forelse ($comments as $commentItem)
+                        <article class="brutalist-border p-6 space-y-3">
+                            <div class="flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <img
+                                        src="{{ $commentItem->user?->avatar_path ? asset('storage/'.$commentItem->user->avatar_path) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=120' }}"
+                                        alt="{{ $commentItem->user?->name ?? 'Anonymous' }}"
+                                        class="w-10 h-10 object-cover border-2 border-black dark:border-white shrink-0"
+                                    >
+                                    <div class="min-w-0">
+                                        <p class="font-black uppercase truncate">{{ $commentItem->user?->name ?? 'Anonymous' }}</p>
+                                        <p class="font-mono text-[10px] uppercase opacity-60">
+                                            {{ $commentItem->user?->role ? str_replace('_', ' ', strtoupper($commentItem->user->role)) : 'guest' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="font-mono text-[10px] uppercase opacity-60">{{ $commentItem->created_at?->format('d M Y H:i') }}</p>
+                            </div>
+                            <p class="leading-relaxed">{{ $commentItem->comment }}</p>
+                        </article>
+                    @empty
+                        <x-ui.empaty
+                            title="No Comments Yet"
+                            message="Belum ada komentar untuk artikel ini."
+                        />
+                    @endforelse
+                </div>
+            </section>
+
             <section class="p-8 lg:p-16 brutalist-border-b">
-                <h2 class="font-black text-4xl lg:text-6xl uppercase tracking-tighter mb-12">More From Julian Casablancas</h2>
+                <h2 class="font-black text-4xl lg:text-6xl uppercase tracking-tighter mb-12">More From {{ $post->author }}</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t-2 border-l-2 border-black dark:border-white">
-                    <a href="{{ url('/articles/the-death-of-the-landing-page') }}" class="p-6 border-r-2 border-b-2 border-black dark:border-white group cursor-pointer hover:bg-black hover:text-white transition-colors block">
-                        <span class="font-mono text-[10px] block mb-4">REF: ART_082</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4">The death of the landing page.</h3>
-                        <p class="text-xs mb-6 opacity-60 uppercase">Exploring the shift toward decentralized information nodes.</p>
-                        <span class="font-mono text-[10px] underline">Open File</span>
-                    </a>
-                    <a href="{{ url('/articles/type-as-image-image-as-type') }}" class="p-6 border-r-2 border-b-2 border-black dark:border-white group cursor-pointer hover:bg-black hover:text-white transition-colors block">
-                        <span class="font-mono text-[10px] block mb-4">REF: ART_075</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4">Type as image / image as type.</h3>
-                        <p class="text-xs mb-6 opacity-60 uppercase">When visual meaning transcends the literal word.</p>
-                        <span class="font-mono text-[10px] underline">Open File</span>
-                    </a>
-                    <a href="{{ url('/articles/the-manifesto-of-imperfection') }}" class="p-6 border-r-2 border-b-2 border-black dark:border-white group cursor-pointer hover:bg-black hover:text-white transition-colors text-white bg-red-600 block">
-                        <span class="font-mono text-[10px] block mb-4">REF: MANI_002</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4">The Manifesto of Imperfection.</h3>
-                        <p class="text-xs mb-6 uppercase">Protocol for human-first digital creation.</p>
-                        <span class="font-mono text-[10px] underline">Open File</span>
-                    </a>
-                    <a href="{{ url('/articles/static-noise-as-comfort') }}" class="p-6 border-r-2 border-b-2 border-black dark:border-white group cursor-pointer hover:bg-black hover:text-white transition-colors block">
-                        <span class="font-mono text-[10px] block mb-4">REF: ART_041</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4">Static Noise as Comfort.</h3>
-                        <p class="text-xs mb-6 opacity-60 uppercase">The psychology of white noise in open digital systems.</p>
-                        <span class="font-mono text-[10px] underline">Open File</span>
-                    </a>
+                    @forelse ($moreFromAuthor as $relatedPost)
+                        <a href="{{ $relatedPost['href'] }}" class="p-6 border-r-2 border-b-2 border-black dark:border-white group cursor-pointer hover:bg-black hover:text-white transition-colors block">
+                            <span class="font-mono text-[10px] block mb-4">REF: {{ $relatedPost['ref'] }}</span>
+                            <h3 class="font-black text-2xl uppercase leading-none mb-4">{{ $relatedPost['title'] }}</h3>
+                            <p class="text-xs mb-6 opacity-60 uppercase">{{ $relatedPost['description'] }}</p>
+                            <span class="font-mono text-[10px] underline">Open File</span>
+                        </a>
+                    @empty
+                        <div class="border-r-2 border-b-2 border-black dark:border-white p-4 md:col-span-2 lg:col-span-4">
+                            <x-ui.empaty
+                                title="No More Posts"
+                                message="This author has no other published posts yet."
+                            />
+                        </div>
+                    @endforelse
                 </div>
             </section>
         </main>

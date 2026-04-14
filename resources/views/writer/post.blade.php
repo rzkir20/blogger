@@ -24,48 +24,9 @@
                         <h1 class="font-black text-5xl sm:text-6xl lg:text-8xl leading-[0.85] tracking-tighter uppercase">
                             Posts<br>Archive.
                         </h1>
-                        <a href="#" id="header-new-post-btn" class="brutalist-btn-black inline-block text-center shrink-0">
+                        <a href="{{ route('writer.posts.create') }}" id="header-new-post-btn" class="brutalist-btn-black inline-block text-center shrink-0">
                             Create New Entry +
                         </a>
-                    </div>
-                </section>
-
-                <section class="flex flex-col xl:flex-row gap-6 items-stretch xl:items-end">
-                    <div class="flex-1 space-y-2">
-                        <label class="font-mono text-xs font-black uppercase tracking-widest opacity-80">Search Archives</label>
-                        <div class="relative">
-                            <input type="text" placeholder="Keyword, Title, or Topic..." class="w-full brutalist-input pl-12 dark:bg-transparent">
-                            <iconify-icon icon="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-zinc-950 dark:text-zinc-50 pointer-events-none"></iconify-icon>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 xl:w-1/2">
-                        <div class="space-y-2">
-                            <label class="font-mono text-xs font-black uppercase tracking-widest opacity-80">Status</label>
-                            <select class="w-full brutalist-input h-[46px] dark:bg-transparent appearance-none cursor-pointer">
-                                <option>All Status</option>
-                                <option>Published</option>
-                                <option>Draft</option>
-                                <option>Archived</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-mono text-xs font-black uppercase tracking-widest opacity-80">Category</label>
-                            <select class="w-full brutalist-input h-[46px] dark:bg-transparent appearance-none cursor-pointer">
-                                <option>All Categories</option>
-                                <option>Design</option>
-                                <option>Culture</option>
-                                <option>Technology</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-mono text-xs font-black uppercase tracking-widest opacity-80">Sort By</label>
-                            <select class="w-full brutalist-input h-[46px] dark:bg-transparent appearance-none cursor-pointer">
-                                <option>Newest</option>
-                                <option>Most Views</option>
-                                <option>Oldest</option>
-                            </select>
-                        </div>
                     </div>
                 </section>
 
@@ -73,114 +34,72 @@
                     <table class="w-full border-collapse min-w-[720px]">
                         <thead>
                             <tr class="border-b border-zinc-900 dark:border-zinc-300 text-left uppercase font-mono text-[10px] font-black tracking-widest bg-gray-50 dark:bg-zinc-900">
-                                <th class="p-6 w-12"><input type="checkbox" class="w-4 h-4 accent-black dark:accent-white" aria-label="Select all"></th>
                                 <th class="p-6 min-w-[300px]">Publication Title</th>
-                                <th class="p-6">Date</th>
-                                <th class="p-6">Reach</th>
+                                <th class="p-6">Category</th>
+                                <th class="p-6">Author</th>
                                 <th class="p-6">Status</th>
+                                <th class="p-6">Views / Likes / Comments</th>
+                                <th class="p-6">Updated</th>
                                 <th class="p-6 text-right">Control</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/10 dark:divide-white/10">
-                            <tr class="group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors cursor-default">
-                                <td class="p-6"><input type="checkbox" class="w-4 h-4 accent-black dark:accent-white group-hover:accent-white dark:group-hover:accent-black" aria-label="Select row"></td>
-                                <td class="p-6">
-                                    <h3 class="text-xl md:text-2xl font-black uppercase leading-tight">Raw Truths: The Death of Modern Design Systems</h3>
-                                    <p class="font-mono text-[10px] font-bold mt-1 opacity-60 group-hover:opacity-60">Category: Design Systems</p>
-                                </td>
-                                <td class="p-6 whitespace-nowrap text-sm font-black uppercase">Sept 24, 2024</td>
-                                <td class="p-6 whitespace-nowrap">
-                                    <span class="text-lg font-black">42,102</span>
-                                    <span class="font-mono text-[10px] block font-bold opacity-60 uppercase">Total Views</span>
-                                </td>
-                                <td class="p-6">
-                                    <span class="inline-block border-2 border-zinc-900 dark:border-zinc-300 px-3 py-1 font-mono text-[10px] font-black uppercase group-hover:border-zinc-100 dark:group-hover:border-zinc-600">Published</span>
-                                </td>
-                                <td class="p-6 text-right">
-                                    <div class="flex items-center justify-end gap-4">
-                                        <button type="button" class="hover:scale-125 transition-transform" aria-label="Edit"><iconify-icon icon="lucide:edit-3" class="text-xl"></iconify-icon></button>
-                                        <button type="button" class="hover:scale-125 transition-transform hover:text-red-500 dark:hover:text-red-600" aria-label="Delete"><iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors cursor-default">
-                                <td class="p-6"><input type="checkbox" class="w-4 h-4 accent-black dark:accent-white group-hover:accent-white dark:group-hover:accent-black" aria-label="Select row"></td>
-                                <td class="p-6">
-                                    <h3 class="text-xl md:text-2xl font-black uppercase leading-tight">Minimalism as a Form of Rebellion</h3>
-                                    <p class="font-mono text-[10px] font-bold mt-1 opacity-60">Category: Philosophy</p>
-                                </td>
-                                <td class="p-6 whitespace-nowrap text-sm font-black uppercase">Sept 18, 2024</td>
-                                <td class="p-6 whitespace-nowrap">
-                                    <span class="text-lg font-black">18,449</span>
-                                    <span class="font-mono text-[10px] block font-bold opacity-60 uppercase">Total Views</span>
-                                </td>
-                                <td class="p-6">
-                                    <span class="inline-block border-2 border-zinc-900 dark:border-zinc-300 px-3 py-1 font-mono text-[10px] font-black uppercase group-hover:border-zinc-100 dark:group-hover:border-zinc-600">Published</span>
-                                </td>
-                                <td class="p-6 text-right">
-                                    <div class="flex items-center justify-end gap-4">
-                                        <button type="button" class="hover:scale-125 transition-transform" aria-label="Edit"><iconify-icon icon="lucide:edit-3" class="text-xl"></iconify-icon></button>
-                                        <button type="button" class="hover:scale-125 transition-transform hover:text-red-500 dark:hover:text-red-600" aria-label="Delete"><iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors cursor-default">
-                                <td class="p-6"><input type="checkbox" class="w-4 h-4 accent-black dark:accent-white group-hover:accent-white dark:group-hover:accent-black" aria-label="Select row"></td>
-                                <td class="p-6">
-                                    <h3 class="text-xl md:text-2xl font-black uppercase leading-tight">The Archive Project: Reclaiming History</h3>
-                                    <p class="font-mono text-[10px] font-bold mt-1 opacity-60">Category: History</p>
-                                </td>
-                                <td class="p-6 whitespace-nowrap text-sm font-black uppercase">Sept 12, 2024</td>
-                                <td class="p-6 whitespace-nowrap">
-                                    <span class="text-lg font-black">9,221</span>
-                                    <span class="font-mono text-[10px] block font-bold opacity-60 uppercase">Total Views</span>
-                                </td>
-                                <td class="p-6">
-                                    <span class="inline-block border-2 border-dashed border-zinc-900 dark:border-zinc-300 px-3 py-1 font-mono text-[10px] font-black uppercase group-hover:border-zinc-100 dark:group-hover:border-zinc-600">Draft</span>
-                                </td>
-                                <td class="p-6 text-right">
-                                    <div class="flex items-center justify-end gap-4">
-                                        <button type="button" class="hover:scale-125 transition-transform" aria-label="Edit"><iconify-icon icon="lucide:edit-3" class="text-xl"></iconify-icon></button>
-                                        <button type="button" class="hover:scale-125 transition-transform hover:text-red-500 dark:hover:text-red-600" aria-label="Delete"><iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors cursor-default">
-                                <td class="p-6"><input type="checkbox" class="w-4 h-4 accent-black dark:accent-white group-hover:accent-white dark:group-hover:accent-black" aria-label="Select row"></td>
-                                <td class="p-6">
-                                    <h3 class="text-xl md:text-2xl font-black uppercase leading-tight">Typography as Architectural Form</h3>
-                                    <p class="font-mono text-[10px] font-bold mt-1 opacity-60">Category: Arts</p>
-                                </td>
-                                <td class="p-6 whitespace-nowrap text-sm font-black uppercase">Aug 29, 2024</td>
-                                <td class="p-6 whitespace-nowrap">
-                                    <span class="text-lg font-black">12,044</span>
-                                    <span class="font-mono text-[10px] block font-bold opacity-60 uppercase">Total Views</span>
-                                </td>
-                                <td class="p-6">
-                                    <span class="inline-block bg-zinc-950 text-zinc-50 dark:bg-zinc-100 dark:text-zinc-950 px-3 py-1 font-mono text-[10px] font-black uppercase group-hover:bg-zinc-100 group-hover:text-zinc-950 dark:group-hover:bg-zinc-950 dark:group-hover:text-zinc-50">Archived</span>
-                                </td>
-                                <td class="p-6 text-right">
-                                    <div class="flex items-center justify-end gap-4">
-                                        <button type="button" class="hover:scale-125 transition-transform" aria-label="View"><iconify-icon icon="lucide:eye" class="text-xl"></iconify-icon></button>
-                                        <button type="button" class="hover:scale-125 transition-transform hover:text-red-500 dark:hover:text-red-600" aria-label="Delete"><iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @forelse ($posts as $post)
+                                <tr class="group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors cursor-default">
+                                    <td class="p-6">
+                                        <h3 class="text-xl md:text-2xl font-black uppercase leading-tight">{{ $post->title }}</h3>
+                                        <p class="font-mono text-[10px] font-bold mt-1 opacity-60">{{ $post->description }}</p>
+                                        @if (! empty($post->tags))
+                                            <p class="font-mono text-[10px] font-bold mt-2 opacity-60">#{{ implode(' #', $post->tags) }}</p>
+                                        @endif
+                                    </td>
+                                    <td class="p-6 whitespace-nowrap text-sm font-black uppercase">{{ $post->category }}</td>
+                                    <td class="p-6 whitespace-nowrap text-sm font-black uppercase">{{ $post->author }}</td>
+                                    <td class="p-6 whitespace-nowrap text-sm font-black uppercase">
+                                        @if ($post->is_published)
+                                            <span class="inline-block border-2 border-zinc-900 dark:border-zinc-300 px-3 py-1 font-mono text-[10px] font-black uppercase">Published</span>
+                                        @else
+                                            <span class="inline-block border-2 border-dashed border-zinc-900 dark:border-zinc-300 px-3 py-1 font-mono text-[10px] font-black uppercase">Draft</span>
+                                        @endif
+                                    </td>
+                                    <td class="p-6 whitespace-nowrap">
+                                        <span class="font-mono text-[10px] font-bold uppercase block">VIEWS: {{ number_format($post->view_list_count) }}</span>
+                                        <span class="font-mono text-[10px] font-bold uppercase block">LIKES: {{ number_format($post->like_list_count) }}</span>
+                                        <span class="font-mono text-[10px] font-bold uppercase block">COMMENTS: {{ number_format($post->comments_list_count) }}</span>
+                                    </td>
+                                    <td class="p-6 whitespace-nowrap text-sm font-black uppercase">{{ $post->updated_at?->format('d M Y') }}</td>
+                                    <td class="p-6 text-right">
+                                        <div class="flex items-center justify-end gap-4">
+                                            <a href="{{ route('writer.posts.priview', $post) }}" class="hover:scale-125 transition-transform" aria-label="Preview"><iconify-icon icon="lucide:eye" class="text-xl"></iconify-icon></a>
+                                            <a href="{{ route('writer.posts.edit', $post) }}" class="hover:scale-125 transition-transform" aria-label="Edit"><iconify-icon icon="lucide:edit-3" class="text-xl"></iconify-icon></a>
+                                            <form method="post" action="{{ route('writer.posts.destroy', $post) }}" onsubmit="return confirm('Delete this post?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="hover:scale-125 transition-transform hover:text-red-500 dark:hover:text-red-600" aria-label="Delete">
+                                                    <iconify-icon icon="lucide:trash-2" class="text-xl"></iconify-icon>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="p-6">
+                                        <x-ui.empaty
+                                            title="Belum ada post"
+                                            message='Klik "Create New Entry +" untuk membuat artikel pertama.'
+                                            action-label="Create New Entry +"
+                                            :action-href="route('writer.posts.create')"
+                                        />
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </section>
 
-                <section class="flex flex-col md:flex-row justify-between items-center gap-6 pt-6">
-                    <p class="font-mono text-xs font-black uppercase tracking-widest opacity-60">Showing 1-10 of 124 Archives</p>
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <button type="button" class="w-12 h-12 brutalist-btn flex items-center justify-center p-0" aria-label="Previous page"><iconify-icon icon="lucide:chevron-left"></iconify-icon></button>
-                        <button type="button" class="w-12 h-12 brutalist-btn-black flex items-center justify-center p-0" aria-current="page">1</button>
-                        <button type="button" class="w-12 h-12 brutalist-btn flex items-center justify-center p-0">2</button>
-                        <button type="button" class="w-12 h-12 brutalist-btn flex items-center justify-center p-0">3</button>
-                        <span class="w-12 h-12 flex items-center justify-center font-bold">…</span>
-                        <button type="button" class="w-12 h-12 brutalist-btn flex items-center justify-center p-0">13</button>
-                        <button type="button" class="w-12 h-12 brutalist-btn flex items-center justify-center p-0" aria-label="Next page"><iconify-icon icon="lucide:chevron-right"></iconify-icon></button>
-                    </div>
+                <section class="pt-4">
+                    <p class="font-mono text-xs font-black uppercase tracking-widest opacity-60">Total Arsip: {{ $posts->count() }}</p>
                 </section>
 
                 <footer class="absolute bottom-0 left-0 right-0 border-t border-zinc-900 dark:border-zinc-300 p-8 px-6 md:px-12 writer-app bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50">

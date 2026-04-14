@@ -4,6 +4,11 @@
     $base = url('/writer');
 @endphp
 
+@once
+    {!! ToastMagic::styles() !!}
+    {!! ToastMagic::scripts() !!}
+@endonce
+
 <aside class="writer-scroll w-full md:w-72 border-b-2 md:border-b-0 md:border-r-2 border-zinc-900 dark:border-zinc-300 sticky top-0 md:h-screen flex flex-col z-50 bg-white dark:bg-zinc-950 shrink-0 text-zinc-950 dark:text-zinc-50">
     <div class="p-8 border-b-2 border-zinc-900 dark:border-zinc-300">
         <a href="{{ url('/') }}" class="font-black text-3xl tracking-tighter">WRITER.</a>
@@ -48,6 +53,15 @@
             ])>
             <iconify-icon icon="lucide:user-check" class="text-xl shrink-0"></iconify-icon>
             Following
+        </a>
+        <a href="{{ route('writer.comments') }}"
+            @class([
+                'p-6 md:px-8 md:py-6 font-bold uppercase text-sm border-b border-zinc-900 dark:border-zinc-300 flex items-center gap-3 transition-all duration-200',
+                'bg-zinc-950 text-zinc-50 dark:bg-zinc-100 dark:text-zinc-950' => $active === 'comments',
+                'text-zinc-950 dark:text-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950' => $active !== 'comments',
+            ])>
+            <iconify-icon icon="lucide:message-square" class="text-xl shrink-0"></iconify-icon>
+            Comments
         </a>
         <a href="{{ route('writer.profile') }}"
             @class([

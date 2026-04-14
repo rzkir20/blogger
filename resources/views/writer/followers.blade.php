@@ -1,13 +1,3 @@
-@php
-    $networkFollowers = [
-        ['name' => 'Alex Rivera', 'badge' => 'LVL 4 MEMBER', 'meta' => 'Joined August 2024 • BERLIN, DE', 'engagement' => '92%', 'read' => '48'],
-        ['name' => 'Sarah Chen', 'badge' => 'TOP CONTRIBUTOR', 'meta' => 'Joined July 2024 • TOKYO, JP', 'engagement' => '88%', 'read' => '124'],
-        ['name' => 'Marcus Wolff', 'badge' => 'LVL 2 MEMBER', 'meta' => 'Joined May 2024 • LONDON, UK', 'engagement' => '64%', 'read' => '12'],
-        ['name' => 'Elara Vane', 'badge' => 'ARCHIVE SUPPORTER', 'meta' => 'Joined April 2024 • NEW YORK, US', 'engagement' => '98%', 'read' => '205'],
-        ['name' => 'David Park', 'badge' => 'NEW MEMBER', 'meta' => 'Joined Sept 2024 • SEOUL, KR', 'engagement' => '10%', 'read' => '2'],
-        ['name' => 'Luca Moretti', 'badge' => 'BETA TESTER', 'meta' => 'Joined June 2024 • MILAN, IT', 'engagement' => '76%', 'read' => '31'],
-    ];
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +42,7 @@
 
                 <section id="followers-list" class="space-y-12">
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 border-b border-zinc-900 dark:border-zinc-300 pb-4">
-                        <h2 class="font-black text-4xl tracking-tighter uppercase">Active Subscribers (8,240)</h2>
+                        <h2 class="font-black text-4xl tracking-tighter uppercase">Active Subscribers ({{ number_format($networkFollowers->total()) }})</h2>
                         <div class="flex gap-2 mb-1 shrink-0" aria-hidden="true">
                             <span class="w-3 h-3 bg-zinc-950 dark:bg-zinc-100"></span>
                             <span class="w-3 h-3 bg-gray-200 dark:bg-zinc-700"></span>
@@ -60,42 +50,44 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-t border-zinc-900 dark:border-zinc-300">
-                        @foreach ($networkFollowers as $follower)
-                            <div class="p-8 border-r border-b border-zinc-900 dark:border-zinc-300 group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all duration-300 flex flex-col justify-between h-80">
-                                <div>
-                                    <div class="flex justify-between items-start gap-2">
-                                        <div class="w-16 h-16 bg-zinc-950 dark:bg-zinc-100 flex items-center justify-center text-zinc-50 dark:text-zinc-950 shrink-0 mb-6 group-hover:bg-zinc-100 group-hover:text-zinc-950 dark:group-hover:bg-zinc-950 dark:group-hover:text-zinc-50 transition-colors">
-                                            <iconify-icon icon="lucide:user" class="text-3xl"></iconify-icon>
+                    @if ($networkFollowers->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-t border-zinc-900 dark:border-zinc-300">
+                            @foreach ($networkFollowers as $follower)
+                                <div class="p-8 border-r border-b border-zinc-900 dark:border-zinc-300 group hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all duration-300 flex flex-col justify-between h-80">
+                                    <div>
+                                        <div class="flex justify-between items-start gap-2">
+                                            <img
+                                                src="{{ $follower['avatar'] }}"
+                                                alt="{{ $follower['name'] }}"
+                                                class="w-16 h-16 object-cover border-2 border-zinc-900 dark:border-zinc-300 shrink-0 mb-6"
+                                            >
+                                            <span class="font-mono text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:opacity-60 text-right">{{ $follower['badge'] }}</span>
                                         </div>
-                                        <span class="font-mono text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:opacity-60 text-right">{{ $follower['badge'] }}</span>
+                                        <h3 class="text-2xl font-black uppercase leading-tight">{{ $follower['name'] }}</h3>
+                                        <p class="font-mono text-xs font-bold uppercase opacity-60 mt-1">{{ $follower['meta'] }}</p>
                                     </div>
-                                    <h3 class="text-2xl font-black uppercase leading-tight">{{ $follower['name'] }}</h3>
-                                    <p class="font-mono text-xs font-bold uppercase opacity-60 mt-1">{{ $follower['meta'] }}</p>
-                                </div>
 
-                                <div class="grid grid-cols-2 gap-4 border-t border-zinc-900 dark:border-zinc-300 group-hover:border-zinc-100 dark:group-hover:border-zinc-600 pt-4 mt-auto transition-colors">
-                                    <div class="space-y-1">
-                                        <span class="block font-mono text-[9px] font-black uppercase opacity-50">Engagement</span>
-                                        <span class="text-lg font-black">{{ $follower['engagement'] }}</span>
-                                    </div>
-                                    <div class="space-y-1">
-                                        <span class="block font-mono text-[9px] font-black uppercase opacity-50">Posts Read</span>
-                                        <span class="text-lg font-black">{{ $follower['read'] }}</span>
+                                    <div class="grid grid-cols-2 gap-4 border-t border-zinc-900 dark:border-zinc-300 group-hover:border-zinc-100 dark:group-hover:border-zinc-600 pt-4 mt-auto transition-colors">
+                                        <div class="space-y-1">
+                                            <span class="block font-mono text-[9px] font-black uppercase opacity-50">Engagement</span>
+                                            <span class="text-lg font-black">{{ $follower['engagement'] }}</span>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <span class="block font-mono text-[9px] font-black uppercase opacity-50">Posts Read</span>
+                                            <span class="text-lg font-black">{{ $follower['read'] }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <x-ui.empaty
+                            title="Belum ada followers"
+                            message="Belum ada user yang mengikuti akun kamu."
+                        />
+                    @endif
 
-                    <div class="flex flex-wrap items-center justify-center gap-2 pt-12">
-                        <button type="button" class="w-12 h-12 border border-zinc-900 dark:border-zinc-300 flex items-center justify-center hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all font-bold text-zinc-950 dark:text-zinc-50">01</button>
-                        <button type="button" class="w-12 h-12 border border-zinc-900 dark:border-zinc-300 flex items-center justify-center hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all font-bold text-zinc-950 dark:text-zinc-50">02</button>
-                        <button type="button" class="w-12 h-12 border border-zinc-900 dark:border-zinc-300 flex items-center justify-center hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all font-bold text-zinc-950 dark:text-zinc-50">03</button>
-                        <span class="mx-2 font-black">…</span>
-                        <button type="button" class="w-12 h-12 border border-zinc-900 dark:border-zinc-300 flex items-center justify-center hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all font-bold text-zinc-950 dark:text-zinc-50">99</button>
-                        <button type="button" class="h-12 border-2 border-zinc-900 dark:border-zinc-300 px-6 flex items-center justify-center hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-all font-black uppercase tracking-widest text-zinc-950 dark:text-zinc-50">Next Archives</button>
-                    </div>
+                    <x-ui.pagination :paginator="$networkFollowers" class="pt-12" />
                 </section>
 
                 <footer class="border-t border-zinc-900 dark:border-zinc-300 pt-12 pb-24">

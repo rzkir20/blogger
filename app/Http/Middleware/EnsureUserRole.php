@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
+use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +20,8 @@ class EnsureUserRole
         $user = $request->user();
 
         if (! $user) {
+            ToastMagic::warning('Harus login dulu', 'Silakan login untuk melanjutkan.');
+
             return redirect()->route('login');
         }
 
@@ -27,6 +30,8 @@ class EnsureUserRole
         if ($user->isSuperAdmin() || $user->normalizedRole() === $expected) {
             return $next($request);
         }
+
+        ToastMagic::error('Akses ditolak', 'Kamu tidak punya izin untuk membuka halaman ini.');
 
         return redirect()->route($user->dashboardRouteName());
     }

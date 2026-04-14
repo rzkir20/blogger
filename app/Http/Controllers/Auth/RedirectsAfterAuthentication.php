@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Devrabiul\ToastMagic\Facades\ToastMagic;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,8 @@ trait RedirectsAfterAuthentication
      */
     protected function redirectAfterLogin(Request $request, User $user, string $status): RedirectResponse
     {
+        ToastMagic::success('Login berhasil', $status);
+
         if ($user->isSuperAdmin()) {
             $request->session()->forget('url.intended');
 
@@ -30,6 +33,8 @@ trait RedirectsAfterAuthentication
      */
     protected function redirectAfterRegistration(User $user, string $status): RedirectResponse
     {
+        ToastMagic::success('Registrasi berhasil', $status);
+
         return redirect()
             ->route($user->dashboardRouteName())
             ->with('status', $status);

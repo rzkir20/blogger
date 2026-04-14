@@ -30,7 +30,7 @@
                             Meet the architects of visual dissent. A global network of thinkers, makers, and critics.
                         </p>
                         <div class="flex gap-4 font-mono text-[10px] uppercase">
-                            <span class="bg-black text-white px-2 py-1">Total: 42_Nodes</span>
+                            <span class="bg-black text-white px-2 py-1">Total: {{ $writers->count() }}_Nodes</span>
                             <span>Status: Active</span>
                         </div>
                     </div>
@@ -51,97 +51,31 @@
                 </div>
 
                 <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div class="p-8 brutalist-border-r brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_001</span>
-                            <span class="font-mono text-[10px] uppercase bg-black text-white px-2">Lead</span>
+                    @forelse ($writers as $writer)
+                        <a href="{{ route('authors.show', $writer) }}" class="block p-8 brutalist-border-r brutalist-border-b group author-card-hover cursor-pointer">
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="font-mono text-[10px] uppercase opacity-60">Node_{{ str_pad((string) $writer->id, 3, '0', STR_PAD_LEFT) }}</span>
+                                <span class="font-mono text-[10px] uppercase bg-black text-white px-2">{{ str_replace('_', ' ', strtoupper((string) $writer->role)) }}</span>
+                            </div>
+                            <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
+                                <img src="{{ $writer->avatar_path ? asset('storage/'.$writer->avatar_path) : 'https://api.dicebear.com/7.x/avataaars/svg?seed='.urlencode($writer->name) }}" class="w-full h-full object-cover bg-slate-100" alt="{{ $writer->name }}">
+                            </div>
+                            <h4 class="font-black text-3xl uppercase leading-none mb-2">{{ $writer->name }}</h4>
+                            <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: {{ str_replace('_', ' ', strtoupper((string) $writer->role)) }}</p>
+                            <p class="text-sm font-semibold mb-8 line-clamp-3">{{ $writer->bio ?: 'No bio provided yet.' }}</p>
+                            <div class="flex justify-between items-end border-t border-black pt-4">
+                                <span class="font-mono text-[10px] uppercase">Files: {{ number_format($writer->posts_count) }}</span>
+                                <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="md:col-span-2 lg:col-span-3 p-6">
+                            <x-ui.empaty
+                                title="Belum ada writer"
+                                message="Saat ini belum ada user dengan role writer."
+                            />
                         </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Julian" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Julian <br> Casablancas</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Design_Ethics</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Critical examination of modern design systems and the death of human imperfection in the digital age.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 24</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="p-8 brutalist-border-r brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_002</span>
-                        </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elias" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Elias <br> Thorne</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Technologist</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Exploring the friction between analog human memory and silicon-based storage protocols.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 18</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="p-8 brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_003</span>
-                        </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Sarah <br> Jenkins</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Philosophy</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Investigating the aesthetic of void and minimalist nihilism in consumer interfaces.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 12</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="p-8 brutalist-border-r brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_004</span>
-                        </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Marcus <br> Vane</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Architecture</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Translating physical brutalism into digital hierarchy and space management.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 31</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="p-8 brutalist-border-r brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_005</span>
-                        </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Elena" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Dr. Elena <br> Kim</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Neuroscience</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Studying the biological response to visual clutter vs. geometric abstraction.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 09</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="p-8 brutalist-border-b group author-card-hover cursor-pointer">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="font-mono text-[10px] uppercase opacity-60">Node_006</span>
-                        </div>
-                        <div class="aspect-square brutalist-border mb-6 grayscale overflow-hidden">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Oliver" class="w-full h-full object-cover bg-slate-100" alt="Author">
-                        </div>
-                        <h4 class="font-black text-3xl uppercase leading-none mb-2">Oliver <br> Grant</h4>
-                        <p class="font-mono text-[10px] uppercase mb-6 opacity-60">Discipline: Urbanism</p>
-                        <p class="text-sm font-semibold mb-8 line-clamp-3">Mapping the decay of virtual public spaces and the rise of private nodes.</p>
-                        <div class="flex justify-between items-end border-t border-black pt-4">
-                            <span class="font-mono text-[10px] uppercase">Files: 15</span>
-                            <iconify-icon icon="lucide:arrow-right-circle" class="text-2xl"></iconify-icon>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
             </section>
 

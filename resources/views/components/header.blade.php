@@ -1,6 +1,8 @@
 @once
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=archivo@400,600,800&f[]=archivo-black@400&f[]=jet-brains-mono@400&display=swap" rel="stylesheet">
+    {!! ToastMagic::styles() !!}
+    {!! ToastMagic::scripts() !!}
 @endonce
 @php
     $isExplore = request()->is('explore');

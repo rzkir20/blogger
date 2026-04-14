@@ -115,39 +115,24 @@
                     <div class="font-mono text-xs uppercase underline cursor-pointer">View all files</div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-t-2 border-l-2 border-black">
-                    <article class="p-8 border-r-2 border-b-2 border-black group cursor-pointer">
-                        <div class="aspect-video bg-black mb-6 grayscale group-hover:grayscale-0 transition-all">
-                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="Thumb">
+                    @forelse ($latestTransmissions as $transmission)
+                        <x-ui.card
+                            :image="$transmission['image']"
+                            :image-alt="$transmission['imageAlt']"
+                            :file-ref="$transmission['fileRef']"
+                            :title="$transmission['title']"
+                            :author="$transmission['author']"
+                            :date="$transmission['date']"
+                            :href="$transmission['href']"
+                        />
+                    @empty
+                        <div class="border-r-2 border-b-2 border-black p-4 md:col-span-2 lg:col-span-3">
+                            <x-ui.empaty
+                                title="No Transmissions Yet"
+                                message="Belum ada artikel terbaru yang dipublikasikan."
+                            />
                         </div>
-                        <span class="font-mono text-[10px] uppercase mb-2 block">FileRef: ART_099</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4 group-hover:text-red-600">Analog fetishism in the age of silicon.</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[10px] uppercase">Author: E. Thorne</span>
-                            <span class="font-mono text-[10px] uppercase">03.24.24</span>
-                        </div>
-                    </article>
-                    <article class="p-8 border-r-2 border-b-2 border-black group cursor-pointer">
-                        <div class="aspect-video bg-black mb-6 grayscale group-hover:grayscale-0 transition-all">
-                            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="Thumb">
-                        </div>
-                        <span class="font-mono text-[10px] uppercase mb-2 block">FileRef: ART_098</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4 group-hover:text-red-600">Deep work or deep distraction?</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[10px] uppercase">Author: M. Vane</span>
-                            <span class="font-mono text-[10px] uppercase">03.22.24</span>
-                        </div>
-                    </article>
-                    <article class="p-8 border-r-2 border-b-2 border-black group cursor-pointer">
-                        <div class="aspect-video bg-black mb-6 grayscale group-hover:grayscale-0 transition-all">
-                            <img src="https://images.unsplash.com/photo-1502472091351-80b78d40167c?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="Thumb">
-                        </div>
-                        <span class="font-mono text-[10px] uppercase mb-2 block">FileRef: ART_097</span>
-                        <h3 class="font-black text-2xl uppercase leading-none mb-4 group-hover:text-red-600">The return of the concrete grid.</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[10px] uppercase">Author: S. Jenkins</span>
-                            <span class="font-mono text-[10px] uppercase">03.20.24</span>
-                        </div>
-                    </article>
+                    @endforelse
                 </div>
             </section>
         </main>

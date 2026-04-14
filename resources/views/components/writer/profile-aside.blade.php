@@ -2,6 +2,9 @@
     $user = Auth::user();
     $bio = $user->bio ?: 'Cultural critic and writer exploring the intersection of brutalist architecture and digital interface design. Contributor to ARCHIVE since joining the network.';
     $memberSince = $user->created_at?->format('M Y') ?? '—';
+    $avatarUrl = $user->avatar_path
+        ? Storage::url($user->avatar_path)
+        : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop';
 @endphp
 
 <div id="profile"
@@ -12,7 +15,7 @@
         <div class="w-full aspect-square bg-zinc-950 grayscale relative group overflow-hidden border-2 border-zinc-900 dark:border-zinc-300">
             <iconify-icon icon="lucide:camera"
                 class="text-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity text-zinc-50 pointer-events-none"></iconify-icon>
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&amp;w=600&amp;auto=format&amp;fit=crop"
+            <img src="{{ $avatarUrl }}"
                 alt="Profile" class="w-full h-full object-cover group-hover:opacity-50 transition-opacity">
         </div>
 
@@ -31,18 +34,18 @@
                 </div>
                 <div>
                     <span class="block font-mono text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">Region</span>
-                    <span class="text-lg font-black uppercase">—</span>
+                    <span class="text-lg font-black uppercase">{{ $user->region ? strtoupper($user->region) : '—' }}</span>
                 </div>
             </div>
 
             <div class="flex gap-3 pt-4">
-                <a href="#" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Twitter">
+                <a href="{{ $user->twitter_url ?: '#' }}" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Twitter">
                     <iconify-icon icon="lucide:twitter" class="text-lg"></iconify-icon>
                 </a>
-                <a href="#" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Instagram">
+                <a href="{{ $user->instagram_url ?: '#' }}" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Instagram">
                     <iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon>
                 </a>
-                <a href="#" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Website">
+                <a href="{{ $user->website_url ?: '#' }}" class="p-3 border-2 border-zinc-900 dark:border-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Website">
                     <iconify-icon icon="lucide:globe" class="text-lg"></iconify-icon>
                 </a>
             </div>
