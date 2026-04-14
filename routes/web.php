@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -34,6 +36,14 @@ Route::get('/register', function () {
 
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+})->middleware('auth')->name('logout');
+
 Route::middleware('auth')->group(function () {
     Route::middleware('role:super_admin')->group(function () {
         Route::get('/dashboard', function () {
@@ -45,6 +55,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/writer', function () {
             return view('writer.index');
         })->name('writer.home');
+
+        Route::get('/writer/posts', function () {
+            return view('writer.post', ['activeNav' => 'posts']);
+        })->name('writer.posts');
+
+        Route::get('/writer/followers', function () {
+            return view('writer.followers', ['activeNav' => 'followers']);
+        })->name('writer.followers');
+
+        Route::get('/writer/following', function () {
+            return view('writer.following', ['activeNav' => 'following']);
+        })->name('writer.following');
+
+        Route::get('/writer/profile', function () {
+            return view('writer.profile', ['activeNav' => 'profile']);
+        })->name('writer.profile');
     });
 
     Route::middleware('role:reader')->group(function () {

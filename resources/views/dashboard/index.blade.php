@@ -23,7 +23,7 @@
                     Command <br> Deck.
                 </h1>
                 <p class="font-mono text-sm uppercase opacity-70 mb-10">
-                    Session: {{ Auth::user()->email }} — full archive authority on this node.
+                    Session: {{ Auth::user()->email }} — reader/writer nodes cannot open this deck; you may inspect their consoles below.
                 </p>
                 <div class="flex flex-wrap gap-4 font-mono text-xs uppercase">
                     <a href="{{ url('/') }}" class="inline-block px-6 py-3 brutalist-border hover-red">Index</a>

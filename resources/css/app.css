@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Writer & brutalist toggles use .dark-mode on body/#root — align Tailwind `dark:` with it */
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -84,10 +87,10 @@ body {
     border-right: none;
 }
 
-/* Dark mode (toggled on body + #root) */
+/* Dark mode (toggled on body + #root) — zinc palette; do not invert arbitrary utilities */
 .dark-mode {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #09090b;
+    color: #fafafa;
 }
 
 .dark-mode .brutalist-border,
@@ -97,37 +100,18 @@ body {
 .dark-mode .brutalist-border-l,
 .dark-mode .brutalist-border-4,
 .dark-mode .grid-strict > div {
-    border-color: #ffffff;
-}
-
-.dark-mode .bg-white {
-    background-color: #000000;
-}
-
-.dark-mode .text-black {
-    color: #ffffff;
-}
-
-.dark-mode .bg-black {
-    background-color: #ffffff;
-}
-
-.dark-mode .text-white {
-    color: #000000;
-}
-
-.dark-mode .border-black {
-    border-color: #ffffff;
+    border-color: #d4d4d8;
 }
 
 #root.dark-mode {
-    border-color: #ffffff;
+    border-color: #d4d4d8;
 }
 
-.dark-mode input,
-.dark-mode textarea {
-    border-color: #ffffff !important;
-    color: #ffffff !important;
+/* Non-brutalist form fields on legacy pages (e.g. login x-ui.input) */
+.dark-mode input:not(.brutalist-input):not([type='checkbox']):not([type='radio']),
+.dark-mode textarea:not(.brutalist-input) {
+    border-color: #d4d4d8 !important;
+    color: #fafafa !important;
 }
 
 input:focus,
@@ -238,6 +222,176 @@ textarea:focus {
 .dark-mode .protocol-number {
     opacity: 0.2;
     color: #ff0000;
+}
+
+/* Writer profile: form labels */
+.brutalist-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    opacity: 0.6;
+}
+
+.dark-mode .brutalist-label {
+    opacity: 0.85;
+    color: #d4d4d8;
+}
+
+/* Writer posts archive: form controls */
+.brutalist-input {
+    border: 2px solid #000000;
+    background: transparent;
+    padding: 12px 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    outline: none;
+    border-radius: 0;
+}
+
+.brutalist-input:focus {
+    background: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    border-color: #000000 !important;
+}
+
+.brutalist-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.brutalist-input:focus::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.brutalist-btn {
+    border: 2px solid #000000;
+    background: transparent;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    color: #000000;
+}
+
+.brutalist-btn:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+.brutalist-btn-black {
+    border: 2px solid #000000;
+    background: #000000;
+    color: #ffffff;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.brutalist-btn-black:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+.dark-mode .brutalist-input {
+    border-color: #d4d4d8;
+    color: #fafafa;
+}
+
+.dark-mode .brutalist-input:focus {
+    background: #f4f4f5 !important;
+    color: #18181b !important;
+    border-color: #d4d4d8 !important;
+}
+
+.dark-mode .brutalist-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.dark-mode .brutalist-input:focus::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .brutalist-btn {
+    border-color: #d4d4d8;
+    color: #fafafa;
+}
+
+.dark-mode .brutalist-btn:hover {
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+.dark-mode .brutalist-btn-black {
+    border-color: #d4d4d8;
+    background: #f4f4f5;
+    color: #18181b;
+}
+
+.dark-mode .brutalist-btn-black:hover {
+    background: #18181b;
+    color: #fafafa;
+}
+
+/* Writer dashboard: brutalist + zinc palette (toggle: body.dark-mode / #root.dark-mode) */
+.writer-app {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Writer following network: subscription cards */
+.following-card {
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.following-card:hover {
+    background-color: #18181b;
+    color: #fafafa;
+}
+
+.dark-mode .following-card {
+    border-color: #d4d4d8;
+}
+
+.dark-mode .following-card:hover {
+    background-color: #f4f4f5;
+    color: #18181b;
+}
+
+/* Writer dashboard: scrollbars */
+.writer-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.writer-scroll::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-left: 1px solid #000000;
+}
+
+.writer-scroll::-webkit-scrollbar-thumb {
+    background: #000000;
+}
+
+.dark-mode .writer-scroll::-webkit-scrollbar-track {
+    background: #09090b;
+    border-left-color: #d4d4d8;
+}
+
+.dark-mode .writer-scroll::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
 }
 
 /* Article detail: drop cap */

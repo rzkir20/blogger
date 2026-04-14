@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserRole
 {
+    /**
+     * Reader / writer hanya boleh area role mereka; /dashboard khusus super_admin (mereka tidak lolos cek role itu).
+     * Super admin boleh masuk /writer dan /reader (bypass).
+     */
     public function handle(Request $request, Closure $next, string $role): Response
     {
         /** @var User|null $user */
