@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Writer\AiConfigurationController;
 use App\Http\Controllers\Writer\PostController;
 use App\Http\Controllers\Writer\ProfileController;
 use App\Models\CommentList;
@@ -284,6 +285,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/writer/profile', [ProfileController::class, 'edit'])->name('writer.profile');
         Route::put('/writer/profile', [ProfileController::class, 'update'])->name('writer.profile.update');
+        Route::get('/writer/ai-configurations', [AiConfigurationController::class, 'index'])->name('writer.ai-configurations');
+        Route::post('/writer/ai-configurations', [AiConfigurationController::class, 'store'])->name('writer.ai-configurations.store');
+        Route::put('/writer/ai-configurations/{aiConfiguration}', [AiConfigurationController::class, 'update'])->name('writer.ai-configurations.update');
+        Route::delete('/writer/ai-configurations/{aiConfiguration}', [AiConfigurationController::class, 'destroy'])->name('writer.ai-configurations.destroy');
     });
 
     Route::middleware('role:reader')->group(function () {

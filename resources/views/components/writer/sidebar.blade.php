@@ -72,6 +72,15 @@
             <iconify-icon icon="lucide:user" class="text-xl shrink-0"></iconify-icon>
             Profile
         </a>
+        <a href="{{ route('writer.ai-configurations') }}"
+            @class([
+                'p-6 md:px-8 md:py-6 font-bold uppercase text-sm border-b border-zinc-900 dark:border-zinc-300 flex items-center gap-3 transition-all duration-200',
+                'bg-zinc-950 text-zinc-50 dark:bg-zinc-100 dark:text-zinc-950' => $active === 'ai-configurations',
+                'text-zinc-950 dark:text-zinc-300 hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950' => $active !== 'ai-configurations',
+            ])>
+            <iconify-icon icon="lucide:bot" class="text-xl shrink-0"></iconify-icon>
+            AI Configurations
+        </a>
     </nav>
 
     <div class="p-8 mt-auto border-t-2 border-zinc-900 dark:border-zinc-300 hidden md:block space-y-4">
