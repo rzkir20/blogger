@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureUserRole
 {
     /**
-     * Reader / writer hanya boleh area role mereka; /dashboard khusus super_admin (mereka tidak lolos cek role itu).
-     * Super admin boleh masuk /writer dan /reader (bypass).
+     * Setiap role hanya boleh mengakses area role yang sama.
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
@@ -27,7 +26,7 @@ class EnsureUserRole
 
         $expected = $this->canonicalRole($role);
 
-        if ($user->isSuperAdmin() || $user->normalizedRole() === $expected) {
+        if ($user->normalizedRole() === $expected) {
             return $next($request);
         }
 

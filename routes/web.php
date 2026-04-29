@@ -208,6 +208,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard.index');
         })->name('dashboard');
+
+        Route::get('/dashboard/managements-accounts', function () {
+            $users = User::query()
+                ->latest()
+                ->get();
+
+            return view('dashboard.managements-accounts', [
+                'users' => $users,
+            ]);
+        })->name('dashboard.managements-accounts');
     });
 
     Route::middleware('role:writer')->group(function () {

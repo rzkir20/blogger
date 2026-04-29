@@ -93,10 +93,9 @@
                 <p class="text-[10px] font-bold uppercase opacity-50">Writer</p>
             </div>
         </div>
-        <div class="flex gap-2">
-            <button type="button" id="writer-mode-toggle" class="flex-1 py-2 border-2 border-zinc-900 dark:border-zinc-300 font-mono text-[10px] uppercase hover:bg-zinc-950 hover:text-zinc-50 dark:hover:bg-zinc-100 dark:hover:text-zinc-950 transition-colors" aria-label="Toggle dark mode">
-                <iconify-icon icon="lucide:sun" class="inline align-middle"></iconify-icon>
-            </button>
+        <div class="flex items-center justify-between gap-3">
+            <span class="text-[10px] font-mono font-bold uppercase tracking-wide opacity-60">Theme</span>
+            <x-ui.thema-toggler />
         </div>
         <form method="post" action="{{ route('logout') }}">
             @csrf

@@ -47,12 +47,12 @@
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
+                        <div class="flex flex-col gap-2">
                             <x-ui.label text="Title" />
                             <x-ui.input type="text" name="title" :value="old('title')" class="brutalist-input" required />
                         </div>
                         
-                        <div class="space-y-2">
+                        <div class="flex flex-col gap-2">
                             <x-ui.label text="Category" />
                             <x-ui.input type="text" name="category" :value="old('category')" class="brutalist-input" list="post-create-categories-list" required />
                             <datalist id="post-create-categories-list">
@@ -62,12 +62,12 @@
                             </datalist>
                         </div>
 
-                        <div class="space-y-2">
+                        <div class="flex flex-col gap-2">
                             <x-ui.label text="Author" />
                             <x-ui.input type="text" name="author" :value="old('author', $authorName)" class="brutalist-input" required readonly />
                         </div>
 
-                        <div class="space-y-2">
+                        <div class="flex flex-col gap-2">
                             <x-ui.label text="Status" />
                             <select name="is_published" class="w-full brutalist-input" required>
                                 <option value="0" @selected(old('is_published', '0') === '0')>Draft</option>
@@ -75,13 +75,13 @@
                             </select>
                         </div>
 
-                        <div class="space-y-2 md:col-span-2">
+                        <div class="flex flex-col gap-2 md:col-span-2">
                             <x-ui.label text="Description" />
                             <textarea name="description" rows="4" class="w-full brutalist-input">{{ old('description') }}</textarea>
                         </div>
     
 
-                        <div class="space-y-2 md:col-span-2">
+                        <div class="flex flex-col gap-2 md:col-span-2">
                             <x-ui.label text="Thumbnail" />
                             <x-ui.file
                                 name="thumbnail"
@@ -97,7 +97,7 @@
                     </div>
 
                  
-                    <div class="space-y-2">
+                    <div class="flex flex-col gap-2">
                         <x-ui.label text="Content" />
                         <x-ui.quileditor
                             name="content"
@@ -106,10 +106,10 @@
                         />
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="flex flex-col gap-2">
                         <x-ui.label text="Tags" />
                         @php($oldTags = old('tags', ['']))
-                        <div id="tags-wrapper-create" class="space-y-2">
+                        <div id="tags-wrapper-create" class="flex flex-col gap-2">
                             @foreach ($oldTags as $tag)
                                 <div class="flex items-center gap-2">
                                     <x-ui.input type="text" name="tags[]" :value="$tag" class="brutalist-input" placeholder="e.g. laravel" list="post-create-tags-list" />
