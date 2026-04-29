@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Writer\AiConfigurationController;
 use App\Http\Controllers\Writer\PostController;
 use App\Http\Controllers\Writer\ProfileController;
+use App\Http\Controllers\Writer\WriterAiController;
 use App\Models\CommentList;
 use App\Models\FollowerList;
 use App\Models\LikeList;
@@ -289,6 +290,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/writer/ai-configurations', [AiConfigurationController::class, 'store'])->name('writer.ai-configurations.store');
         Route::put('/writer/ai-configurations/{aiConfiguration}', [AiConfigurationController::class, 'update'])->name('writer.ai-configurations.update');
         Route::delete('/writer/ai-configurations/{aiConfiguration}', [AiConfigurationController::class, 'destroy'])->name('writer.ai-configurations.destroy');
+        Route::get('/writer/ai-configurations/active', [WriterAiController::class, 'activeConfigurations'])->name('writer.ai-configurations.active');
+        Route::post('/writer/ai/generate', [WriterAiController::class, 'generate'])->name('writer.ai.generate');
+        Route::post('/writer/ai/proxy-image', [WriterAiController::class, 'proxyImage'])->name('writer.ai.proxy-image');
     });
 
     Route::middleware('role:reader')->group(function () {
