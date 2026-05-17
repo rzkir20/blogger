@@ -130,16 +130,13 @@
                                         >
                                             Edit
                                         </button>
-                                        <form method="post" action="{{ route('writer.ai-configurations.destroy', $configuration) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button
-                                                type="submit"
-                                                class="border-2 border-red-700 text-red-700 dark:border-red-300 dark:text-red-300 px-4 py-2 uppercase font-black text-[10px] tracking-[0.2em] hover:bg-red-700 hover:text-white dark:hover:bg-red-300 dark:hover:text-zinc-950 transition-colors"
-                                            >
-                                                Hapus
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            class="border-2 border-red-700 text-red-700 dark:border-red-300 dark:text-red-300 px-4 py-2 uppercase font-black text-[10px] tracking-[0.2em] hover:bg-red-700 hover:text-white dark:hover:bg-red-300 dark:hover:text-zinc-950 transition-colors"
+                                            data-dialog-trigger="ai-config-delete-dialog-{{ $configuration->id }}"
+                                        >
+                                            Hapus
+                                        </button>
                                     </div>
                                 </article>
                             @endforeach
@@ -249,6 +246,25 @@
                     <button type="button" class="border-2 border-zinc-900 dark:border-zinc-300 px-6 py-3 uppercase font-black text-xs tracking-[0.2em]" data-dialog-close>Batal</button>
                 </div>
             </form>
+        </x-ui.dialog>
+
+        <x-ui.dialog id="ai-config-delete-dialog-{{ $configuration->id }}" title="Hapus Konfigurasi" description="Tindakan ini tidak dapat dibatalkan.">
+            <div class="space-y-6">
+                <p class="font-bold uppercase text-sm leading-relaxed">
+                    Yakin ingin menghapus konfigurasi <span class="font-black">{{ $configuration->ai_models }}</span>?
+                </p>
+                <form method="post" action="{{ route('writer.ai-configurations.destroy', $configuration) }}" class="flex flex-wrap gap-3 pt-2">
+                    @csrf
+                    @method('DELETE')
+                    <button
+                        type="submit"
+                        class="border-2 border-red-700 text-red-700 dark:border-red-300 dark:text-red-300 px-6 py-3 uppercase font-black text-xs tracking-[0.2em] hover:bg-red-700 hover:text-white dark:hover:bg-red-300 dark:hover:text-zinc-950 transition-colors"
+                    >
+                        Ya, Hapus
+                    </button>
+                    <button type="button" class="border-2 border-zinc-900 dark:border-zinc-300 px-6 py-3 uppercase font-black text-xs tracking-[0.2em]" data-dialog-close>Batal</button>
+                </form>
+            </div>
         </x-ui.dialog>
     @endforeach
 
